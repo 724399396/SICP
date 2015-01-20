@@ -1,0 +1,20 @@
+#lang racket
+(define (cont-frac n d k)
+  (cont-frac-iter n d 1 k))
+(define (cont-frac-iter n d count k)
+  (if (= count k)
+      (/ (n count) (d count))
+      (/ (n count) (+ (d count) (cont-frac-iter n d (+ count 1) k)))))
+(cont-frac (lambda (i) 1.0)
+           (lambda (i) 1.0)
+           10000)
+
+(define (cont-frac2 n d k)
+  (cont-frac-iter2 n d k (/ (n count) (d count)) k))
+(define (cont-frac-iter2 n d count product k)
+  (if (= count 0)
+      product
+      (cont-frac-iter2 n d (- count 1) (/ (n count) (+ product (d count))) k)))
+(cont-frac2 (lambda (i) 1.0)
+            (lambda (i) 1.0)
+            10000)

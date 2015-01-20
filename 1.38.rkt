@@ -1,0 +1,13 @@
+#lang racket
+(define (cont-frac n d k)
+  (cont-frac-iter n d 1 k))
+(define (cont-frac-iter n d count k)
+  (if (= count k)
+      (/ (n count) (d count))
+      (/ (n count) (+ (d count) (cont-frac-iter n d (+ count 1) k)))))
+(cont-frac (lambda (i) 1.0)
+           (lambda (i)
+             (let ((index (remainder (+ i 1) 3)))
+             (cond ((= index 0) (*(/ (+ i 1) 3) 2))
+                   (else 1))))
+           1000)
